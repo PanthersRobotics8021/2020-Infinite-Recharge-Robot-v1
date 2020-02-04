@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.commands.ClimberControl;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.GTADrive;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -28,10 +30,11 @@ public class RobotContainer {
   private final ClimberControl m_climberUp = new ClimberControl(m_climber, Value.kForward);
   private final ClimberControl m_climberDown = new ClimberControl(m_climber, Value.kReverse);
 
+  private final DriveTrain m_driveTrain = new DriveTrain();
+  private final GTADrive m_gtaDrive = new GTADrive(m_driveTrain);
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -39,6 +42,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    m_driveTrain.setDefaultCommand(m_gtaDrive);
   }
 
   /**
