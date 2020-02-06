@@ -8,15 +8,20 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.commands.ClimberControl;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GTADrive;
+import frc.robot.commands.InputDrive;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -32,9 +37,14 @@ public class RobotContainer {
 
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final GTADrive m_gtaDrive = new GTADrive(m_driveTrain);
+  private final InputDrive m_90Right = new InputDrive(m_driveTrain, .5, -.3, .3);
+  private final InputDrive m_90Left = new InputDrive(m_driveTrain, .5, .3, -.3);
 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final InputDrive m_autoCommand = new InputDrive(m_driveTrain, 1, 1, 3);
+
+  Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
+  Button threeButton = new JoystickButton(driverController, 3);
+  Button fourButton = new JoystickButton(driverController, 4);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -52,8 +62,12 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    Robot.m_oi.threeButton.whenPressed(m_climberUp);
-    Robot.m_oi.fourButton.whenPressed(m_climberDown);
+    threeButton.whenPressed(m_climberUp);
+    fourButton.whenPressed(m_climberDown);
+    /*
+    Robot.m_oi.hatRight.whenPressed(m_90Right);
+    Robot.m_oi.hatLeft.whenPressed(m_90Left);
+    */
   }
 
 

@@ -7,53 +7,65 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.DriveTrain;
 
-public class ClimberControl extends CommandBase {
-  private final Climber m_subsystem;
-  private final Value sValue;
+public class InputDrive extends CommandBase {
+  private final DriveTrain m_subsystem;
+  double rMotors, lMotors, setTime, elapsedTime;
+  Timer timer = new Timer();
+  Boolean timeOut;
 
   /**
-   * Creates a new ClimberControl.
+   * Creates a new InputDrive.
    */
-  public ClimberControl(Climber subsystem, Value state) {
-    sValue = state;
+  public InputDrive(DriveTrain subsystem, double inRMotors, double inLMotors, double inTime) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
+    rMotors = inRMotors;
+    lMotors = inLMotors;
+    setTime = inTime;
+    timeOut = false;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    String stringValue = "Reverse";
 
-    if (sValue == Value.kForward) {
-      stringValue = "Forward";
-    }
-    else if (sValue == Value.kReverse) {
-      stringValue = "Forward";
-    }
-    
-    m_subsystem.setRam(sValue);
-    m_subsystem.displayValues(stringValue);
+    m_subsystem.setRightMotors(rMotors);
+    m_subsystem.setLeftMotors(lMotors);
+    timer.reset();
+    timer.start();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    double elapsedTime = timer.get();
+
+    if (elapsedTime == setTime) {
+      timer.stop();
+      timeOut = true;
+    }
+
+    m_subsystem.displayInputDriveValues(elapsedTime);
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_subsystem.setRightMotors(0);
+    m_subsystem.setLeftMotors(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return timeOut;
   }
 }

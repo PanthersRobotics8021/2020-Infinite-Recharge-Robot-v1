@@ -38,21 +38,13 @@ public class GTADrive extends CommandBase {
     double joyX = Robot.m_oi.GetAxis(Constants.JOY_X);
     double joyY = Robot.m_oi.GetAxis(Constants.JOY_Y);
     double joyZ = Robot.m_oi.GetAxis(Constants.JOY_Z);
-    double throttle = Robot.m_oi.GetAxis(Constants.JOY_SLIDE);
+    double throttle = Robot.m_oi.GetAxis(Constants.JOY_SLIDE)/2 + 1/2;
     boolean thumbButton = Robot.m_oi.GetButton(Constants.THUMB_BUTTON);
-
-
+    
     //motor variables
     double turnValue = 0;
     double lMotors = joyY; 
     double rMotors = joyY;
-
-
-    //throttle logic
-    if (throttle <= 0) {
-      throttle += 1;
-      throttle /= 2;
-    }
 
 
     //reverse system
@@ -78,20 +70,16 @@ public class GTADrive extends CommandBase {
 
     //turning values
     if (turnValue < 0 || turnValue > 0) {
-      //turnValue *= .6;
-      lMotors *= Constants.MOTOR_SPEED_FACTOR;
-      rMotors *= Constants.MOTOR_SPEED_FACTOR;
-      lMotors -= turnValue * Constants.MOTOR_SPEED_FACTOR;
-      rMotors += turnValue * Constants.MOTOR_SPEED_FACTOR;
+      turnValue *= .6 * throttle;
+      lMotors -= turnValue;
+      rMotors += turnValue;
     }
-    else {
-      lMotors *= Constants.MOTOR_SPEED_FACTOR;
-      rMotors *= Constants.MOTOR_SPEED_FACTOR;
-    }
+
 
     //final command
     m_subsystem.setLeftMotors(lMotors * throttle);
     m_subsystem.setRightMotors(rMotors * throttle);
+    m_subsystem.displayValues(throttle, lMotors, rMotors, turnValue, reverse);
   }
   // Called once the command ends or is interrupted.
   @Override

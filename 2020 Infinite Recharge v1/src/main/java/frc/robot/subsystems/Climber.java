@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class Climber extends SubsystemBase {
   /**
@@ -24,6 +25,10 @@ public class Climber extends SubsystemBase {
 
   public void setRam(Value state) {
     doubleSolenoid.set(state);
+  }
+
+  public void displayValues(String stringValue) {
+    Robot.m_oi.DisplayString("climber STATE", stringValue);
   }
 
   @Override

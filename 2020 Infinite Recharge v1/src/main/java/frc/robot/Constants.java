@@ -23,9 +23,9 @@ public final class Constants {
     public static final int MOTOR_ADJUSTER = 2;
 
     //pneumatics ids
-    public static final int PCM_ID = 6;
-    public static final int REVERSE_CHANNEL = 4;
-    public static final int FORWARD_CHANNEL = 5;
+    public static final int PCM_ID = 5;
+    public static final int REVERSE_CHANNEL = 0;
+    public static final int FORWARD_CHANNEL = 1;
   
     //controller ids
     public static final int DRIVER_CONTROLLER = 0;

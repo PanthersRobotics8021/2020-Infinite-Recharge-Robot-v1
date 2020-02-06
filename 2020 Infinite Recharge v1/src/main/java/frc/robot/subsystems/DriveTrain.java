@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class DriveTrain extends SubsystemBase {
   /**
@@ -30,6 +31,18 @@ public class DriveTrain extends SubsystemBase {
 
   public void setRightMotors(double speed) {
     motorRight.set(ControlMode.PercentOutput, -speed);
+  }
+
+  public void displayValues(double throttle, double lMotors, double rMotors, double turnValue, boolean reverse) {
+    Robot.m_oi.DisplayInt("drive THROTTLE", throttle);
+    Robot.m_oi.DisplayInt("drive LMOTORS", lMotors);
+    Robot.m_oi.DisplayInt("drive RMOTORS", rMotors);
+    Robot.m_oi.DisplayInt("drive TURNING", turnValue);
+    Robot.m_oi.DisplayBool("drive REVERSE", reverse);
+  }
+
+  public void displayInputDriveValues(double elapsedTime) {
+    Robot.m_oi.DisplayInt("inputdrive ELAPSED TIME", elapsedTime);
   }
 
   @Override
