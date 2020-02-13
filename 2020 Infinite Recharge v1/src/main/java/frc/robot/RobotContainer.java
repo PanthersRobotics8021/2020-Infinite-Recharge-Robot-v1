@@ -12,15 +12,16 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.commands.ClimberControl;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ColorDetection;
 import frc.robot.commands.GTADrive;
 import frc.robot.commands.InputDrive;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ColorChange;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 
 /**
@@ -31,20 +32,41 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
+  //climber
   private final Climber m_climber = new Climber();
   private final ClimberControl m_climberUp = new ClimberControl(m_climber, Value.kForward);
   private final ClimberControl m_climberDown = new ClimberControl(m_climber, Value.kReverse);
 
+  //color change
+  private final ColorChange m_colorChange = new ColorChange();
+  private final ColorDetection m_changeBlue = new ColorDetection(m_colorChange, "Blue");
+  private final ColorDetection m_changeGreen = new ColorDetection(m_colorChange, "Green");
+  private final ColorDetection m_changeRed = new ColorDetection(m_colorChange, "Red");
+  private final ColorDetection m_changeYellow = new ColorDetection(m_colorChange, "Yellow");
+
+  //drivetrain
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final GTADrive m_gtaDrive = new GTADrive(m_driveTrain);
-  private final InputDrive m_90Right = new InputDrive(m_driveTrain, .5, -.3, .3);
-  private final InputDrive m_90Left = new InputDrive(m_driveTrain, .5, .3, -.3);
+  private final InputDrive m_90Right = new InputDrive(m_driveTrain, -.3, .3, .5);
+  private final InputDrive m_90Left = new InputDrive(m_driveTrain, .3, -.3, .5);
 
-  private final InputDrive m_autoCommand = new InputDrive(m_driveTrain, 1, 1, 3);
+  //auto command
+  private final InputDrive m_autoCommand = new InputDrive(m_driveTrain, .1, .1, 2);
 
+  //joystick oi
   Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
-  Button threeButton = new JoystickButton(driverController, 3);
-  Button fourButton = new JoystickButton(driverController, 4);
+  POVButton hatRight = new POVButton(driverController, Constants.POV_E);
+  POVButton hatLeft = new POVButton(driverController, Constants.POV_W);
+
+  //controller oi
+  XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER);
+  Button xButton = new JoystickButton(operatorController, Constants.X_BUTTON);
+  Button aButton = new JoystickButton(operatorController, Constants.A_BUTTON);
+  Button bButton = new JoystickButton(operatorController, Constants.B_BUTTON);
+  Button yButton = new JoystickButton(operatorController, Constants.Y_BUTTON);
+  Button leftBumper = new JoystickButton(operatorController, Constants.LEFT_BUMPER);
+  Button rightBumper = new JoystickButton(operatorController, Constants.RIGHT_BUMPER);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -62,12 +84,19 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    threeButton.whenPressed(m_climberUp);
-    fourButton.whenPressed(m_climberDown);
-    /*
-    Robot.m_oi.hatRight.whenPressed(m_90Right);
-    Robot.m_oi.hatLeft.whenPressed(m_90Left);
-    */
+    //climber binds
+    leftBumper.whenPressed(m_climberUp);
+    rightBumper.whenPressed(m_climberDown);
+
+    //color change binds
+    xButton.whenPressed(m_changeBlue);
+    aButton.whenPressed(m_changeGreen);
+    bButton.whenPressed(m_changeRed);
+    yButton.whenPressed(m_changeYellow);
+
+    //auto turn binds
+    hatRight.whenPressed(m_90Right);
+    hatLeft.whenPressed(m_90Left);
   }
 
 

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.I2C;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -18,16 +20,20 @@ package frc.robot;
 public final class Constants {
 
     //motor ids
-    public static final int MOTOR_LEFT_ID = 0;
-    public static final int MOTOR_RIGHT_ID = 1;
-    public static final int MOTOR_ADJUSTER = 2;
+    public static final int MOTOR_LEFT_ID = 2;
+    public static final int MOTOR_RIGHT_ID = 4;
+    public static final int MOTOR_ADJUSTER = 3;
+    public static final double MOTOR_ADJUSTER_SPEED = .5;
 
     //pneumatics ids
     public static final int PCM_ID = 5;
-    public static final int REVERSE_CHANNEL = 0;
-    public static final int FORWARD_CHANNEL = 1;
+    public static final int REVERSE_CHANNEL = 1;
+    public static final int FORWARD_CHANNEL = 0;
+
+    //roborio ports
+    public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
   
-    //controller ids
+    //joystick ids
     public static final int DRIVER_CONTROLLER = 0;
     public static final int JOY_X = 0;
     public static final int JOY_Y = 1;
@@ -45,10 +51,39 @@ public final class Constants {
     public static final int PAD_B2 = 10;
     public static final int PAD_C1 = 11;
     public static final int PAD_C2 = 12;
-  
+
+    //xbox ids
+    public static final int OPERATOR_CONTROLLER = 1;
+    public static final int RIGHT_X = 0;
+    public static final int RIGHT_Y = 1;
+    public static final int LEFT_X = 2;
+    public static final int LEFT_Y = 3;
+    public static final int X_BUTTON = 1;
+    public static final int A_BUTTON = 2;
+    public static final int B_BUTTON = 3;
+    public static final int Y_BUTTON = 4;
+    public static final int LEFT_BUMPER = 5;
+    public static final int RIGHT_BUMPER = 6;
+    public static final int LEFT_TRIGGER = 7;
+    public static final int RIGHT_TRIGGER = 8;
+    public static final int BACK_BUTTON = 9;
+    public static final int START_BUTTON = 10;
+    public static final int LEFT_JOY_CLICK = 11;
+    public static final int RIGHT_JOY_CLICK = 12;
+
+    //pov ids
+    public static final int POV_N = 0;
+    public static final int POV_NE = 45;
+    public static final int POV_E = 90;
+    public static final int POV_SE = 135;
+    public static final int POV_S = 180;
+    public static final int POV_SW = 225;
+    public static final int POV_W = 270;
+    public static final int POV_NW = 315;
+
     //drivetrain variables
     public static final double MOTOR_SPEED_FACTOR = 1;
     public static final double MOTOR_THRESHOLD = .05;
-    public static final double TURN_THRESHOLD = .3;
+    public static final double TURN_THRESHOLD = .2;
     
 }

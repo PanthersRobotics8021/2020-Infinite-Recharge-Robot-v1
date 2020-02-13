@@ -27,7 +27,6 @@ public class InputDrive extends CommandBase {
     rMotors = inRMotors;
     lMotors = inLMotors;
     setTime = inTime;
-    timeOut = false;
   }
 
   // Called when the command is initially scheduled.
@@ -38,6 +37,7 @@ public class InputDrive extends CommandBase {
     m_subsystem.setLeftMotors(lMotors);
     timer.reset();
     timer.start();
+    timeOut = false;
 
   }
 
@@ -47,7 +47,7 @@ public class InputDrive extends CommandBase {
 
     double elapsedTime = timer.get();
 
-    if (elapsedTime == setTime) {
+    if (elapsedTime >= setTime) {
       timer.stop();
       timeOut = true;
     }

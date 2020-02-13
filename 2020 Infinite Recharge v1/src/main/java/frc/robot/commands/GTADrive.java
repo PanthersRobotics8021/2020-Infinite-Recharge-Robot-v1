@@ -35,12 +35,16 @@ public class GTADrive extends CommandBase {
   @Override
   public void execute() {
     //joystick variables
-    double joyX = Robot.m_oi.GetAxis(Constants.JOY_X);
-    double joyY = Robot.m_oi.GetAxis(Constants.JOY_Y);
-    double joyZ = Robot.m_oi.GetAxis(Constants.JOY_Z);
-    double throttle = Robot.m_oi.GetAxis(Constants.JOY_SLIDE)/2 + 1/2;
-    boolean thumbButton = Robot.m_oi.GetButton(Constants.THUMB_BUTTON);
+    //double joyX = Robot.m_oi.GetDriverAxis(Constants.JOY_X);
+    double joyY = -Robot.m_oi.GetDriverAxis(Constants.JOY_Y);
+    double joyZ = Robot.m_oi.GetDriverAxis(Constants.JOY_Z);
+    double throttle = -Robot.m_oi.GetDriverAxis(Constants.JOY_SLIDE);
+    boolean thumbButton = Robot.m_oi.GetDriverButtonPressed(Constants.THUMB_BUTTON);
     
+
+    //throttle logic
+    throttle = throttle/2 + .5;
+
     //motor variables
     double turnValue = 0;
     double lMotors = joyY; 
@@ -59,20 +63,19 @@ public class GTADrive extends CommandBase {
 
 
     //turn logic
-    if (joyX > Constants.TURN_THRESHOLD || joyX < -Constants.TURN_THRESHOLD) {
-      turnValue += joyX;
+    if (joyZ - Constants.TURN_THRESHOLD > Constants.TURN_THRESHOLD) {
+      turnValue += (joyZ - Constants.TURN_THRESHOLD);
     }
-
-    if (joyZ > Constants.TURN_THRESHOLD || joyZ < -Constants.TURN_THRESHOLD) {
-      turnValue += joyZ;
+    else if (joyZ + Constants.TURN_THRESHOLD < -Constants.TURN_THRESHOLD) {
+      turnValue += (joyZ + Constants.TURN_THRESHOLD);
     }
 
 
     //turning values
     if (turnValue < 0 || turnValue > 0) {
-      turnValue *= .6 * throttle;
-      lMotors -= turnValue;
-      rMotors += turnValue;
+      turnValue *= throttle;
+      lMotors += turnValue;
+      rMotors -= turnValue;
     }
 
 

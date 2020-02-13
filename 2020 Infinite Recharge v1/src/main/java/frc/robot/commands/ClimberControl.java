@@ -34,7 +34,7 @@ public class ClimberControl extends CommandBase {
       stringValue = "Forward";
     }
     else if (sValue == Value.kReverse) {
-      stringValue = "Forward";
+      stringValue = "Reverse";
     }
     
     m_subsystem.setRam(sValue);
