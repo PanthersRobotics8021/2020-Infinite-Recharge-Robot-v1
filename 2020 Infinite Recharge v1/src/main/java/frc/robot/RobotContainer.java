@@ -15,6 +15,7 @@ import frc.robot.commands.ClimberControl;
 import frc.robot.commands.ColorDetection;
 import frc.robot.commands.GTADrive;
 import frc.robot.commands.InputDrive;
+import frc.robot.commands.InputWheelChange;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorChange;
 import frc.robot.subsystems.DriveTrain;
@@ -44,6 +45,7 @@ public class RobotContainer {
   private final ColorDetection m_changeGreen = new ColorDetection(m_colorChange, "Green");
   private final ColorDetection m_changeRed = new ColorDetection(m_colorChange, "Red");
   private final ColorDetection m_changeYellow = new ColorDetection(m_colorChange, "Yellow");
+  private final InputWheelChange m_autoRotate = new InputWheelChange(m_colorChange);
 
   //drivetrain
   private final DriveTrain m_driveTrain = new DriveTrain();
@@ -67,6 +69,7 @@ public class RobotContainer {
   Button yButton = new JoystickButton(operatorController, Constants.Y_BUTTON);
   Button leftBumper = new JoystickButton(operatorController, Constants.LEFT_BUMPER);
   Button rightBumper = new JoystickButton(operatorController, Constants.RIGHT_BUMPER);
+  POVButton dpadUp = new POVButton(operatorController, Constants.POV_N);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -75,6 +78,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_driveTrain.setDefaultCommand(m_gtaDrive);
+    m_colorChange.setDefaultCommand(m_autoRotate);
   }
 
   /**

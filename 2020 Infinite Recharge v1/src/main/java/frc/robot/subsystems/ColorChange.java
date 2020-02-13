@@ -25,12 +25,18 @@ public class ColorChange extends SubsystemBase {
 
   private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.I2C_PORT);
   private final TalonSRX motorAdjust = new TalonSRX(Constants.MOTOR_ADJUSTER);
+  public int rotations = 0;
 
   public void displayColor(double confidence, String setColor, String colorName, boolean matchResult) {
     Robot.m_oi.DisplayInt("color CONFIDENCE", confidence);
     Robot.m_oi.DisplayString("color TARGET COLOR", setColor);
     Robot.m_oi.DisplayString("color DETECTED COLOR", colorName);
     Robot.m_oi.DisplayBool("color MATCH RESULT", matchResult);
+  }
+
+  public void displayAuto(double elapsedtime, double rotationTime) {
+    Robot.m_oi.DisplayInt("auto ELAPSED TIME", elapsedtime);
+    Robot.m_oi.DisplayInt("auto ROTATION TIME", rotationTime);
   }
 
   public void setAdjustMotor(double speed) {
@@ -47,5 +53,6 @@ public class ColorChange extends SubsystemBase {
     Robot.m_oi.DisplayInt("color RED", r);
     Robot.m_oi.DisplayInt("color GREEN", g);
     Robot.m_oi.DisplayInt("color BLUE", b);
+    Robot.m_oi.DisplayInt("color ROTATIONS", rotations);
   }
 }

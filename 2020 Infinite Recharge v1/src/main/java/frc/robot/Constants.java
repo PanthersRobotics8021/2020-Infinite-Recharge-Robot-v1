@@ -24,6 +24,7 @@ public final class Constants {
     public static final int MOTOR_RIGHT_ID = 4;
     public static final int MOTOR_ADJUSTER = 3;
     public static final double MOTOR_ADJUSTER_SPEED = .5;
+    public static final int ROTATION_TIME_FACTOR = 2;
 
     //pneumatics ids
     public static final int PCM_ID = 5;
