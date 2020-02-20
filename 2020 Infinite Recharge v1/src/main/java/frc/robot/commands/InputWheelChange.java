@@ -36,23 +36,23 @@ public class InputWheelChange extends CommandBase {
   @Override
   public void execute() {
     //controller variables
-    boolean leftJoyClick = Robot.m_oi.GetOperatorButtonPressed(Constants.LEFT_JOY_CLICK);
-    boolean rightJoyClick = Robot.m_oi.GetOperatorButtonPressed(Constants.RIGHT_JOY_CLICK);
+    boolean addClick = Robot.m_oi.GetOperatorButtonPressed(Constants.RIGHT_TRIGGER);
+    boolean subClick = Robot.m_oi.GetOperatorButtonPressed(Constants.LEFT_TRIGGER);
     
 
     //rotation adjust
-    if (leftJoyClick) {
+    if (addClick) {
       m_subsystem.rotations += 1;
     }
-    if (rightJoyClick) {
+    if (subClick) {
       m_subsystem.rotations -= 1;
     }
 
     //auto rotate variables
-    int rotations = m_subsystem.rotations;
-    int rotationTime = rotations * Constants.ROTATION_TIME_FACTOR;
+    double rotations = m_subsystem.rotations;
+    double rotationTime = rotations * Constants.ROTATION_TIME_FACTOR;
     double elapsedTime = timer.get();
-    double motorSpeed = Constants.MOTOR_ADJUSTER_SPEED;
+    double motorSpeed = Constants.REVOLUTIONS_ADJUSTER_SPEED;
     
 
     //motor set

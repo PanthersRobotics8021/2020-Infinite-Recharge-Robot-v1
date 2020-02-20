@@ -22,14 +22,17 @@ public final class Constants {
     //motor ids
     public static final int MOTOR_LEFT_ID = 2;
     public static final int MOTOR_RIGHT_ID = 4;
-    public static final int MOTOR_ADJUSTER = 3;
-    public static final double MOTOR_ADJUSTER_SPEED = .5;
-    public static final int ROTATION_TIME_FACTOR = 2;
+    public static final int MOTOR_ADJUSTER_ID = 5;
+    public static final int MOTOR_SHOOTER_ID = 3;
+    public static final double COLOR_ADJUSTER_SPEED = .25;
+    public static final double REVOLUTIONS_ADJUSTER_SPEED = .5;
+    public static final double ROTATION_TIME_FACTOR = 6.8;
+    public static final double SHOOTER_SPEED = .5;
 
     //pneumatics ids
-    public static final int PCM_ID = 5;
-    public static final int REVERSE_CHANNEL = 1;
-    public static final int FORWARD_CHANNEL = 0;
+    public static final int PCM_ID = 6;
+    public static final int REVERSE_CHANNEL = 0;
+    public static final int FORWARD_CHANNEL = 1;
 
     //roborio ports
     public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;

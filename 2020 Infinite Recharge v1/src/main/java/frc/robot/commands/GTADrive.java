@@ -73,7 +73,7 @@ public class GTADrive extends CommandBase {
 
     //turning values
     if (turnValue < 0 || turnValue > 0) {
-      turnValue *= throttle;
+      turnValue *= throttle * .7;
       lMotors += turnValue;
       rMotors -= turnValue;
     }
@@ -87,6 +87,8 @@ public class GTADrive extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_subsystem.setLeftMotors(0);
+    m_subsystem.setRightMotors(0);
   }
 
   // Returns true when the command should end.

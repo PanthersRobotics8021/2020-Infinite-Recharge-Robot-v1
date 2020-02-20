@@ -24,8 +24,8 @@ public class ColorChange extends SubsystemBase {
   }
 
   private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.I2C_PORT);
-  private final TalonSRX motorAdjust = new TalonSRX(Constants.MOTOR_ADJUSTER);
-  public int rotations = 0;
+  private final TalonSRX motorAdjust = new TalonSRX(Constants.MOTOR_ADJUSTER_ID);
+  public double rotations = 0;
 
   public void displayColor(double confidence, String setColor, String colorName, boolean matchResult) {
     Robot.m_oi.DisplayInt("color CONFIDENCE", confidence);

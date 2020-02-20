@@ -7,19 +7,19 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.subsystems.Shooter;
 
-public class ClimberControl extends CommandBase {
-  private final Climber m_subsystem;
-  private final Value sValue;
+public class ShooterControl extends CommandBase {
+  private final Shooter m_subsystem;
+  private boolean toggle = false;
 
   /**
-   * Creates a new ClimberControl.
+   * Creates a new ShooterControl.
    */
-  public ClimberControl(Climber subsystem, Value state) {
-    sValue = state;
+  public ShooterControl(Shooter subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -28,28 +28,32 @@ public class ClimberControl extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    String stringValue = "Reverse";
-
-    if (sValue == Value.kForward) {
-      stringValue = "Forward";
-    }
-    else if (sValue == Value.kReverse) {
-      stringValue = "Reverse";
-    }
-    
-    m_subsystem.setRam(sValue);
-    m_subsystem.displayValues(stringValue);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    boolean startButton = Robot.m_oi.GetOperatorButtonPressed(Constants.START_BUTTON);
+
+    if (startButton) {
+      toggle = !toggle;
+    }
+
+    if (toggle) {
+      m_subsystem.setShooterMotor(Constants.SHOOTER_SPEED);
+    }
+    else {
+      m_subsystem.setShooterMotor(0);
+    }
+
+    m_subsystem.displayValues(toggle);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.setRam(Value.kReverse);
+    m_subsystem.setShooterMotor(0);
   }
 
   // Returns true when the command should end.

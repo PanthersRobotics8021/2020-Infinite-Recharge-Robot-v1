@@ -55,7 +55,7 @@ public class ColorDetection extends CommandBase {
   @Override
   public void initialize() {
     finished = false;
-    m_subsystem.setAdjustMotor(Constants.MOTOR_ADJUSTER_SPEED);
+    m_subsystem.setAdjustMotor(Constants.COLOR_ADJUSTER_SPEED);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -64,7 +64,7 @@ public class ColorDetection extends CommandBase {
     Color detectedColor = colorSensor.getColor();
     ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
     double confidence = match.confidence;
-    double motorSpeed = Constants.MOTOR_ADJUSTER_SPEED;
+    double motorSpeed = Constants.COLOR_ADJUSTER_SPEED;
 
     if (match.color == blueTarget) {
       colorName = "Blue";
@@ -85,7 +85,7 @@ public class ColorDetection extends CommandBase {
 
     if (setColor != colorName) {
       matchResult = true;
-      motorSpeed = Constants.MOTOR_ADJUSTER_SPEED;
+      motorSpeed = Constants.COLOR_ADJUSTER_SPEED;
     }
     else if (setColor == colorName) {
       matchResult = false;
@@ -102,6 +102,7 @@ public class ColorDetection extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_subsystem.setAdjustMotor(0);
   }
 
   // Returns true when the command should end.

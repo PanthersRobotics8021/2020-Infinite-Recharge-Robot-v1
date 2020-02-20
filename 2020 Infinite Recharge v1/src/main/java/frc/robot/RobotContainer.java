@@ -16,9 +16,11 @@ import frc.robot.commands.ColorDetection;
 import frc.robot.commands.GTADrive;
 import frc.robot.commands.InputDrive;
 import frc.robot.commands.InputWheelChange;
+import frc.robot.commands.ShooterControl;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorChange;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -50,8 +52,12 @@ public class RobotContainer {
   //drivetrain
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final GTADrive m_gtaDrive = new GTADrive(m_driveTrain);
-  private final InputDrive m_90Right = new InputDrive(m_driveTrain, -.3, .3, .5);
-  private final InputDrive m_90Left = new InputDrive(m_driveTrain, .3, -.3, .5);
+  private final InputDrive m_90Right = new InputDrive(m_driveTrain, -.3, .3, .4);
+  private final InputDrive m_90Left = new InputDrive(m_driveTrain, .3, -.3, .4);
+
+  //shooter
+  private final Shooter m_shooter = new Shooter();
+  private final ShooterControl m_shooterControl = new ShooterControl(m_shooter);
 
   //auto command
   private final InputDrive m_autoCommand = new InputDrive(m_driveTrain, .1, .1, 2);
@@ -79,6 +85,7 @@ public class RobotContainer {
     configureButtonBindings();
     m_driveTrain.setDefaultCommand(m_gtaDrive);
     m_colorChange.setDefaultCommand(m_autoRotate);
+    m_shooter.setDefaultCommand(m_shooterControl);
   }
 
   /**
@@ -89,14 +96,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //climber binds
-    leftBumper.whenPressed(m_climberUp);
-    rightBumper.whenPressed(m_climberDown);
+    rightBumper.whenPressed(m_climberUp);
+    leftBumper.whenPressed(m_climberDown);
 
     //color change binds
-    xButton.whenPressed(m_changeBlue);
-    aButton.whenPressed(m_changeGreen);
-    bButton.whenPressed(m_changeRed);
-    yButton.whenPressed(m_changeYellow);
+    xButton.whenPressed(m_changeRed);
+    aButton.whenPressed(m_changeYellow);
+    bButton.whenPressed(m_changeBlue);
+    yButton.whenPressed(m_changeGreen);
 
     //auto turn binds
     hatRight.whenPressed(m_90Right);
