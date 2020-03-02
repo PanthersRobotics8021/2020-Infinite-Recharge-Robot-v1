@@ -34,9 +34,9 @@ public class ColorChange extends SubsystemBase {
     Robot.m_oi.DisplayBool("color MATCH RESULT", matchResult);
   }
 
-  public void displayAuto(double elapsedtime, double rotationTime) {
-    Robot.m_oi.DisplayInt("auto ELAPSED TIME", elapsedtime);
-    Robot.m_oi.DisplayInt("auto ROTATION TIME", rotationTime);
+  public void displayAutoColor(String initName, double elapsedRotations) {
+    Robot.m_oi.DisplayString("INITMATCH", initName);
+    Robot.m_oi.DisplayInt("ELAPSED ROT", elapsedRotations);
   }
 
   public void setAdjustMotor(double speed) {

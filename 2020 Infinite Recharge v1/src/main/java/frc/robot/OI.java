@@ -10,6 +10,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
+
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 
 /**
  * Add your docs here.
@@ -54,4 +58,21 @@ public class OI {
         SmartDashboard.putString(label, value);
     }
 
+    public String ColorName(Color color, Color blueTarget, Color greenTarget, Color redTarget, Color yellowTarget) {
+        if (color == blueTarget) {
+            return "Blue";
+          }
+          else if (color == greenTarget) {
+            return "Green";
+          }
+          else if (color == redTarget) {
+            return "Red";
+          }
+          else if (color == yellowTarget) {
+            return "Yellow";
+          }
+          else {
+            return "Unknown";
+          }
+    }
 }

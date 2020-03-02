@@ -7,6 +7,11 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,7 +28,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private final Compressor m_compressor = new Compressor(Constants.PCM_ID);
   public static OI m_oi;
-
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -35,6 +40,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     m_oi = new OI();
     m_compressor.enabled();
+    CameraServer.getInstance().startAutomaticCapture();
   }
 
   /**

@@ -73,7 +73,7 @@ public class GTADrive extends CommandBase {
 
     //turning values
     if (turnValue < 0 || turnValue > 0) {
-      turnValue *= throttle * .7;
+      turnValue *= throttle;
       lMotors += turnValue;
       rMotors -= turnValue;
     }

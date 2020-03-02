@@ -15,7 +15,7 @@ import frc.robot.commands.ClimberControl;
 import frc.robot.commands.ColorDetection;
 import frc.robot.commands.GTADrive;
 import frc.robot.commands.InputDrive;
-import frc.robot.commands.InputWheelChange;
+import frc.robot.commands.InputWheelChangeColorBased;
 import frc.robot.commands.ShooterControl;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorChange;
@@ -47,20 +47,20 @@ public class RobotContainer {
   private final ColorDetection m_changeGreen = new ColorDetection(m_colorChange, "Green");
   private final ColorDetection m_changeRed = new ColorDetection(m_colorChange, "Red");
   private final ColorDetection m_changeYellow = new ColorDetection(m_colorChange, "Yellow");
-  private final InputWheelChange m_autoRotate = new InputWheelChange(m_colorChange);
+  private final InputWheelChangeColorBased m_autoRotate = new InputWheelChangeColorBased(m_colorChange);
 
   //drivetrain
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final GTADrive m_gtaDrive = new GTADrive(m_driveTrain);
-  private final InputDrive m_90Right = new InputDrive(m_driveTrain, -.3, .3, .4);
-  private final InputDrive m_90Left = new InputDrive(m_driveTrain, .3, -.3, .4);
+  private final InputDrive m_90Right = new InputDrive(m_driveTrain, -Constants.TURN_90_SPEED, Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
+  private final InputDrive m_90Left = new InputDrive(m_driveTrain, Constants.TURN_90_SPEED, -Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
 
   //shooter
   private final Shooter m_shooter = new Shooter();
   private final ShooterControl m_shooterControl = new ShooterControl(m_shooter);
 
   //auto command
-  private final InputDrive m_autoCommand = new InputDrive(m_driveTrain, .1, .1, 2);
+  private final InputDrive m_autoCommand = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME);
 
   //joystick oi
   Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
