@@ -63,10 +63,10 @@ public class GTADrive extends CommandBase {
 
 
     //turn logic
-    if (joyZ - Constants.TURN_THRESHOLD > Constants.TURN_THRESHOLD) {
+    if (joyZ > Constants.TURN_THRESHOLD) {
       turnValue += (joyZ - Constants.TURN_THRESHOLD);
     }
-    else if (joyZ + Constants.TURN_THRESHOLD < -Constants.TURN_THRESHOLD) {
+    else if (joyZ < -Constants.TURN_THRESHOLD) {
       turnValue += (joyZ + Constants.TURN_THRESHOLD);
     }
 

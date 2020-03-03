@@ -12,9 +12,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
-
 /**
  * Add your docs here.
  */

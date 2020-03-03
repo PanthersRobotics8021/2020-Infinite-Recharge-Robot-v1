@@ -34,21 +34,24 @@ public class ClimberControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //variables
     boolean lBumper = Robot.m_oi.GetOperatorButtonPressed(Constants.LEFT_BUMPER);
     boolean rBumper = Robot.m_oi.GetOperatorButtonPressed(Constants.RIGHT_BUMPER);
 
 
+    //toggle logic
     if (lBumper || rBumper) {
       toggle = !toggle;
     }
 
+
+    //final commands
     if (toggle == true) {
       m_subsystem.setRam(Value.kForward);
     }
     else if (toggle == false) {
       m_subsystem.setRam(Value.kReverse);
     }
-    
     m_subsystem.displayValues(toggle);
   }
 
