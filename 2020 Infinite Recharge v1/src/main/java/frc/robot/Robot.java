@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     m_oi = new OI();
-    m_compressor.enabled();
+    m_compressor.stop();
     CameraServer.getInstance().startAutomaticCapture();
   }
 

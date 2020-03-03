@@ -27,8 +27,8 @@ public class Climber extends SubsystemBase {
     doubleSolenoid.set(state);
   }
 
-  public void displayValues(String stringValue) {
-    Robot.m_oi.DisplayString("climber STATE", stringValue);
+  public void displayValues(Boolean toggle) {
+    Robot.m_oi.DisplayBool("climber STATE", toggle);
   }
 
   @Override

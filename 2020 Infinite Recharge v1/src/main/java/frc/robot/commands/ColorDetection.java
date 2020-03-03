@@ -14,20 +14,23 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.ColorChange;
 
 public class ColorDetection extends CommandBase {
   private final ColorChange m_subsystem;
+
   String setColor;
-  String colorName;
   boolean matchResult;
   boolean finished;
+  
   final ColorSensorV3 colorSensor;
   final ColorMatch colorMatcher;
-  final Color blueTarget;
-  final Color greenTarget;
-  final Color redTarget;
-  final Color yellowTarget;
+  
+  final Color blueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+  final Color greenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+  final Color redTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
+  final Color yellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
 
   /**
@@ -37,17 +40,16 @@ public class ColorDetection extends CommandBase {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
+
     setColor = inColor;
     colorSensor  = new ColorSensorV3(Constants.I2C_PORT);
     colorMatcher = new ColorMatch();
-    blueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-    greenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-    redTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-    yellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+
     colorMatcher.addColorMatch(blueTarget);
     colorMatcher.addColorMatch(greenTarget);
     colorMatcher.addColorMatch(redTarget);
-    colorMatcher.addColorMatch(yellowTarget);    
+    colorMatcher.addColorMatch(yellowTarget);  
+
     matchResult = false;
   }
 
@@ -61,41 +63,28 @@ public class ColorDetection extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    //variables
     Color detectedColor = colorSensor.getColor();
     ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
+    String colorName = Robot.m_oi.ColorName(match.color, blueTarget, greenTarget, redTarget, yellowTarget);
     double confidence = match.confidence;
-    double motorSpeed = Constants.COLOR_ADJUSTER_SPEED;
-
-    if (match.color == blueTarget) {
-      colorName = "Blue";
-    }
-    else if (match.color == greenTarget) {
-      colorName = "Green";
-    }
-    else if (match.color == redTarget) {
-      colorName = "Red";
-    }
-    else if (match.color == yellowTarget) {
-      colorName = "Yellow";
-    }
-    else {
-      colorName = "Unknown";
-    }
 
 
+    //color match
     if (setColor != colorName) {
-      matchResult = true;
-      motorSpeed = Constants.COLOR_ADJUSTER_SPEED;
+      matchResult = false;
+      m_subsystem.setAdjustMotor(Constants.COLOR_ADJUSTER_SPEED);
     }
     else if (setColor == colorName) {
-      matchResult = false;
-      motorSpeed = 0;
+      matchResult = true;
+      m_subsystem.setAdjustMotor(0);
       finished = true;
     }
 
 
-    m_subsystem.displayColor(confidence, setColor, colorName, !matchResult);
-    m_subsystem.setAdjustMotor(motorSpeed);
+    //final command
+    m_subsystem.displayColor(confidence, setColor, colorName, matchResult);
 
   }
 

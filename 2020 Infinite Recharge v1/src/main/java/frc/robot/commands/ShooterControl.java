@@ -33,19 +33,23 @@ public class ShooterControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    boolean startButton = Robot.m_oi.GetOperatorButtonPressed(Constants.START_BUTTON);
+    //variables
+    boolean backButton = Robot.m_oi.GetOperatorButtonPressed(Constants.BACK_BUTTON);
 
-    if (startButton) {
+
+    //toggle value
+    if (backButton) {
       toggle = !toggle;
     }
 
+
+    //final commands
     if (toggle) {
       m_subsystem.setShooterMotor(Constants.SHOOTER_SPEED);
     }
     else {
       m_subsystem.setShooterMotor(0);
     }
-
     m_subsystem.displayValues(toggle);
 
   }

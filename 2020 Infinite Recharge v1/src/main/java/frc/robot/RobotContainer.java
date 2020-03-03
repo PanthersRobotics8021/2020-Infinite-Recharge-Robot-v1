@@ -38,8 +38,7 @@ public class RobotContainer {
 
   //climber
   private final Climber m_climber = new Climber();
-  private final ClimberControl m_climberUp = new ClimberControl(m_climber, Value.kForward);
-  private final ClimberControl m_climberDown = new ClimberControl(m_climber, Value.kReverse);
+  private final ClimberControl m_climberControl = new ClimberControl(m_climber);
 
   //color change
   private final ColorChange m_colorChange = new ColorChange();
@@ -75,7 +74,6 @@ public class RobotContainer {
   Button yButton = new JoystickButton(operatorController, Constants.Y_BUTTON);
   Button leftBumper = new JoystickButton(operatorController, Constants.LEFT_BUMPER);
   Button rightBumper = new JoystickButton(operatorController, Constants.RIGHT_BUMPER);
-  POVButton dpadUp = new POVButton(operatorController, Constants.POV_N);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -86,6 +84,7 @@ public class RobotContainer {
     m_driveTrain.setDefaultCommand(m_gtaDrive);
     m_colorChange.setDefaultCommand(m_autoRotate);
     m_shooter.setDefaultCommand(m_shooterControl);
+    m_climber.setDefaultCommand(m_climberControl);
   }
 
   /**
@@ -95,10 +94,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //climber binds
-    rightBumper.whenPressed(m_climberUp);
-    leftBumper.whenPressed(m_climberDown);
-
     //color change binds
     xButton.whenPressed(m_changeRed);
     aButton.whenPressed(m_changeYellow);

@@ -9,17 +9,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Climber;
 
 public class ClimberControl extends CommandBase {
   private final Climber m_subsystem;
-  private final Value sValue;
+  private boolean toggle;
 
   /**
    * Creates a new ClimberControl.
    */
-  public ClimberControl(Climber subsystem, Value state) {
-    sValue = state;
+  public ClimberControl(Climber subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -28,22 +29,27 @@ public class ClimberControl extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    String stringValue = "Reverse";
-
-    if (sValue == Value.kForward) {
-      stringValue = "Forward";
-    }
-    else if (sValue == Value.kReverse) {
-      stringValue = "Reverse";
-    }
-    
-    m_subsystem.setRam(sValue);
-    m_subsystem.displayValues(stringValue);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    boolean lBumper = Robot.m_oi.GetOperatorButtonPressed(Constants.LEFT_BUMPER);
+    boolean rBumper = Robot.m_oi.GetOperatorButtonPressed(Constants.RIGHT_BUMPER);
+
+
+    if (lBumper || rBumper) {
+      toggle = !toggle;
+    }
+
+    if (toggle == true) {
+      m_subsystem.setRam(Value.kForward);
+    }
+    else if (toggle == false) {
+      m_subsystem.setRam(Value.kReverse);
+    }
+    
+    m_subsystem.displayValues(toggle);
   }
 
   // Called once the command ends or is interrupted.
