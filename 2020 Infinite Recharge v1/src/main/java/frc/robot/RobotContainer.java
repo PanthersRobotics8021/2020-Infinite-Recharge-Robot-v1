@@ -58,7 +58,10 @@ public class RobotContainer {
   private final ShooterControl m_shooterControl = new ShooterControl(m_shooter);
 
   //auto command
-  private final InputDrive m_autoCommand = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME);
+  private final InputDrive m_autoLeft = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME);
+  private final InputDrive m_autoMid = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, -Constants.AUTO_SPEED, Constants.AUTO_TIME);
+  private final InputDrive m_autoRight = new InputDrive(m_driveTrain, -Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME);
+
 
   //joystick oi
   Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
@@ -105,13 +108,13 @@ public class RobotContainer {
   }
 
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+  public Command getAutoLeft() {
+    return m_autoLeft;
+  }
+  public Command getAutoMid() {
+    return m_autoMid;
+  }
+  public Command getAutoRight() {
+    return m_autoRight;
   }
 }

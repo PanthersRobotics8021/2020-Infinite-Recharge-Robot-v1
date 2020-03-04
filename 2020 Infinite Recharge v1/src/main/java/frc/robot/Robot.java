@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -20,7 +21,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+  private Command m_autoLeft;
+  private Command m_autoMid;
+  private Command m_autoRight;
+  private Command m_autoCommand;
   private RobotContainer m_robotContainer;
   private final Compressor m_compressor = new Compressor(Constants.PCM_ID);
   public static OI m_oi;
@@ -71,12 +75,24 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    m_autoLeft = m_robotContainer.getAutoLeft();
+    m_autoMid = m_robotContainer.getAutoMid();
+    m_autoRight = m_robotContainer.getAutoRight();
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    m_oi.DisplayString("SADFASDFASDFSDF", gameData);
+
+    if (gameData == "bruh") {
+      m_autoLeft.schedule();
     }
+    /*
+    else if (gameData == "mid") {
+      m_autoCommand = m_autoMid;
+    }
+    else if (gameData == "right") {
+      m_autoCommand = m_autoRight;
+    }
+    /*/
   }
 
   /**
@@ -92,8 +108,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (m_autoCommand != null) {
+      m_autoCommand.cancel();
     }
   }
 
