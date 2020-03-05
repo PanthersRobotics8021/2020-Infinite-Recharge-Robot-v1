@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -15,6 +16,7 @@ import frc.robot.subsystems.Shooter;
 public class ShooterControl extends CommandBase {
   private final Shooter m_subsystem;
   private boolean toggle = false;
+  private boolean door = true;
 
   /**
    * Creates a new ShooterControl.
@@ -35,11 +37,16 @@ public class ShooterControl extends CommandBase {
   public void execute() {
     //variables
     boolean backButton = Robot.m_oi.GetOperatorButtonPressed(Constants.BACK_BUTTON);
+    boolean startButton = Robot.m_oi.GetOperatorButtonPressed(Constants.START_BUTTON);
 
 
     //toggle value
     if (backButton) {
       toggle = !toggle;
+    }
+
+    if (startButton) {
+      door = !door;
     }
 
 
@@ -50,7 +57,15 @@ public class ShooterControl extends CommandBase {
     else {
       m_subsystem.setShooterMotor(0);
     }
-    m_subsystem.displayValues(toggle);
+
+    if (door) {
+      m_subsystem.setRam(Value.kForward);
+    }
+    else {
+      m_subsystem.setRam(Value.kReverse);
+    }
+
+    m_subsystem.displayValues(toggle, door);
 
   }
 
@@ -58,6 +73,9 @@ public class ShooterControl extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_subsystem.setShooterMotor(0);
+    m_subsystem.setRam(Value.kForward);
+    toggle = false;
+    door = true;
   }
 
   // Returns true when the command should end.

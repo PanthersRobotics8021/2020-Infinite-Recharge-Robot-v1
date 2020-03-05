@@ -21,6 +21,7 @@ import frc.robot.subsystems.ColorChange;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -50,8 +51,11 @@ public class RobotContainer {
   //drivetrain
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final GTADrive m_gtaDrive = new GTADrive(m_driveTrain);
-  private final InputDrive m_90Right = new InputDrive(m_driveTrain, -Constants.TURN_90_SPEED, Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
-  private final InputDrive m_90Left = new InputDrive(m_driveTrain, Constants.TURN_90_SPEED, -Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
+  private final InputDrive m_90Right = new InputDrive(m_driveTrain, -.5, .5, .3);
+  private final InputDrive m_90Left = new InputDrive(m_driveTrain, -.5, .5, .3);
+
+  private final SequentialCommandGroup m_autoFRF = new InputDrive(m_driveTrain, .5, .5, 1).andThen(new InputDrive(m_driveTrain, .5, -.5, .5));
+  private final SequentialCommandGroup m_autoFLF = new InputDrive(m_driveTrain, .5, .5, 1).andThen(new InputDrive(m_driveTrain, -.5, .5, .5));
 
   //shooter
   private final Shooter m_shooter = new Shooter();
@@ -67,6 +71,8 @@ public class RobotContainer {
   Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
   POVButton hatRight = new POVButton(driverController, Constants.POV_E);
   POVButton hatLeft = new POVButton(driverController, Constants.POV_W);
+  Button trigger = new JoystickButton(driverController, Constants.TRIGGER);
+  Button sevenButton = new JoystickButton(driverController, Constants.PAD_A1);
 
   //controller oi
   XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER);
@@ -103,8 +109,14 @@ public class RobotContainer {
     yButton.whenPressed(m_changeGreen);
 
     //auto turn binds
+    //USE .withtimeout !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
     hatRight.whenPressed(m_90Right);
     hatLeft.whenPressed(m_90Left);
+
+    ///////////////////////
+    trigger.whenPressed(m_autoFRF);
+    sevenButton.whenPressed(m_autoFLF);
+
   }
 
 
@@ -116,5 +128,12 @@ public class RobotContainer {
   }
   public Command getAutoRight() {
     return m_autoRight;
+  }
+
+  public SequentialCommandGroup getAutoFRF() {
+    return m_autoFRF;
+  }
+  public SequentialCommandGroup getAutoFLF() {
+    return m_autoFLF;
   }
 }

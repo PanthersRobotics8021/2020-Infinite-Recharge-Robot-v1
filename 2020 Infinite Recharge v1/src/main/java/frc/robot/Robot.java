@@ -9,10 +9,12 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,10 +23,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autoLeft;
-  private Command m_autoMid;
-  private Command m_autoRight;
-  private Command m_autoCommand;
+  SequentialCommandGroup m_autoCommand;
+  SequentialCommandGroup m_autoFRF;
+  SequentialCommandGroup m_autoFLF;
+  SendableChooser<SequentialCommandGroup> chooser = new SendableChooser<>();
+
   private RobotContainer m_robotContainer;
   private final Compressor m_compressor = new Compressor(Constants.PCM_ID);
   public static OI m_oi;
@@ -39,8 +42,13 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     m_oi = new OI();
-    m_compressor.stop();
+    SmartDashboard.putData("Auto mode", chooser); 
+    m_compressor.start();
     CameraServer.getInstance().startAutomaticCapture();
+    m_autoFRF = m_robotContainer.getAutoFRF();
+    m_autoFLF = m_robotContainer.getAutoFLF();
+    chooser.addOption("FRF", m_autoFRF);
+    chooser.addOption("FLF", m_autoFLF);
   }
 
   /**
@@ -75,24 +83,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    String gameData = DriverStation.getInstance().getGameSpecificMessage();
-    m_autoLeft = m_robotContainer.getAutoLeft();
-    m_autoMid = m_robotContainer.getAutoMid();
-    m_autoRight = m_robotContainer.getAutoRight();
-
-    m_oi.DisplayString("SADFASDFASDFSDF", gameData);
-
-    if (gameData == "bruh") {
-      m_autoLeft.schedule();
-    }
-    /*
-    else if (gameData == "mid") {
-      m_autoCommand = m_autoMid;
-    }
-    else if (gameData == "right") {
-      m_autoCommand = m_autoRight;
-    }
-    /*/
+    m_autoCommand = chooser.getSelected();
+    if (m_autoCommand != null) {
+      m_autoCommand.schedule();
+      }
   }
 
   /**

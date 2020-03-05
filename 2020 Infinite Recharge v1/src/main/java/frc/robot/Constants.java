@@ -34,8 +34,10 @@ public final class Constants {
 
     //pneumatics ids
     public static final int PCM_ID = 6;
-    public static final int REVERSE_CHANNEL = 0;
-    public static final int FORWARD_CHANNEL = 1;
+    public static final int CLIMBER_REVERSE = 0;
+    public static final int CLIMBER_FORWARD = 1;
+    public static final int TRAPDOOR_REVERSE = 6;
+    public static final int TRAPDOOR_FORWARD = 7;
 
     //roborio ports
     public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;

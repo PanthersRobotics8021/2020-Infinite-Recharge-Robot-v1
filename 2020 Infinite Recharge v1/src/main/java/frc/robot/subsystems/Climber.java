@@ -21,7 +21,7 @@ public class Climber extends SubsystemBase {
 
   }
 
-  private final DoubleSolenoid doubleSolenoid = new DoubleSolenoid(Constants.PCM_ID, Constants.FORWARD_CHANNEL, Constants.REVERSE_CHANNEL);
+  private final DoubleSolenoid doubleSolenoid = new DoubleSolenoid(Constants.PCM_ID, Constants.CLIMBER_FORWARD, Constants.CLIMBER_REVERSE);
 
   public void setRam(Value state) {
     doubleSolenoid.set(state);

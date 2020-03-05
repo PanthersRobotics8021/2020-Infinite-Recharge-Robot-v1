@@ -52,6 +52,7 @@ public class ClimberControl extends CommandBase {
     else if (toggle == false) {
       m_subsystem.setRam(Value.kReverse);
     }
+    
     m_subsystem.displayValues(toggle);
   }
 
