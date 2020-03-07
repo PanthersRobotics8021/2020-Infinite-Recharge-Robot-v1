@@ -27,10 +27,6 @@ public final class Constants {
     public static final double COLOR_ADJUSTER_SPEED = .5;
     public static final double REVOLUTIONS_ADJUSTER_SPEED = .7;
     public static final double SHOOTER_SPEED = .5;
-    public static final double TURN_90_SPEED = .5;
-    public static final double TURN_90_TIME = .5;
-    public static final double AUTO_SPEED = .5;
-    public static final double AUTO_TIME = 5;
 
     //pneumatics ids
     public static final int PCM_ID = 6;
@@ -93,5 +89,9 @@ public final class Constants {
     //drivetrain variables
     public static final double TURN_SPEED_FACTOR = .9;
     public static final double TURN_THRESHOLD = .2;
+    public static final double TURN_90_SPEED = .5;
+    public static final double TURN_90_TIME = .5;
+    public static final double AUTO_SPEED = .5;
+    public static final double AUTO_TIME = 5;
     
 }

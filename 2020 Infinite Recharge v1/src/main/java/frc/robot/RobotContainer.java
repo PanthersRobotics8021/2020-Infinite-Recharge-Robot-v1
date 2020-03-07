@@ -14,6 +14,7 @@ import frc.robot.commands.ClimberControl;
 import frc.robot.commands.ColorDetection;
 import frc.robot.commands.GTADrive;
 import frc.robot.commands.InputDrive;
+import frc.robot.commands.InputShoot;
 import frc.robot.commands.InputWheelChangeColorBased;
 import frc.robot.commands.ShooterControl;
 import frc.robot.subsystems.Climber;
@@ -51,21 +52,18 @@ public class RobotContainer {
   //drivetrain
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final GTADrive m_gtaDrive = new GTADrive(m_driveTrain);
-  private final InputDrive m_90Right = new InputDrive(m_driveTrain, -.5, .5, .3);
-  private final InputDrive m_90Left = new InputDrive(m_driveTrain, -.5, .5, .3);
+  private final InputDrive m_90Right = new InputDrive(m_driveTrain, Constants.TURN_90_SPEED, -Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
+  private final InputDrive m_90Left = new InputDrive(m_driveTrain, -Constants.TURN_90_SPEED, Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
 
-  private final SequentialCommandGroup m_autoFRF = new InputDrive(m_driveTrain, .5, .5, 1).andThen(new InputDrive(m_driveTrain, .5, -.5, .5));
-  private final SequentialCommandGroup m_autoFLF = new InputDrive(m_driveTrain, .5, .5, 1).andThen(new InputDrive(m_driveTrain, -.5, .5, .5));
 
   //shooter
   private final Shooter m_shooter = new Shooter();
   private final ShooterControl m_shooterControl = new ShooterControl(m_shooter);
 
   //auto command
-  private final InputDrive m_autoLeft = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME);
-  private final InputDrive m_autoMid = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, -Constants.AUTO_SPEED, Constants.AUTO_TIME);
-  private final InputDrive m_autoRight = new InputDrive(m_driveTrain, -Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME);
-
+  private final SequentialCommandGroup m_autoFRF = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, -Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputShoot(m_shooter, Constants.SHOOTER_SPEED))));
+  private final SequentialCommandGroup m_autoFFF = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputShoot(m_shooter, Constants.SHOOTER_SPEED))));
+  private final SequentialCommandGroup m_autoFLF = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, -Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputShoot(m_shooter, Constants.SHOOTER_SPEED))));
 
   //joystick oi
   Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
@@ -119,19 +117,11 @@ public class RobotContainer {
 
   }
 
-
-  public Command getAutoLeft() {
-    return m_autoLeft;
-  }
-  public Command getAutoMid() {
-    return m_autoMid;
-  }
-  public Command getAutoRight() {
-    return m_autoRight;
-  }
-
   public SequentialCommandGroup getAutoFRF() {
     return m_autoFRF;
+  }
+  public SequentialCommandGroup getAutoFFF() {
+    return m_autoFFF;
   }
   public SequentialCommandGroup getAutoFLF() {
     return m_autoFLF;

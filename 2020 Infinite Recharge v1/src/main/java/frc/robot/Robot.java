@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -25,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class Robot extends TimedRobot {
   SequentialCommandGroup m_autoCommand;
   SequentialCommandGroup m_autoFRF;
+  SequentialCommandGroup m_autoFFF;
   SequentialCommandGroup m_autoFLF;
   SendableChooser<SequentialCommandGroup> chooser = new SendableChooser<>();
 
@@ -46,8 +46,10 @@ public class Robot extends TimedRobot {
     m_compressor.start();
     CameraServer.getInstance().startAutomaticCapture();
     m_autoFRF = m_robotContainer.getAutoFRF();
+    m_autoFFF = m_robotContainer.getAutoFFF();
     m_autoFLF = m_robotContainer.getAutoFLF();
     chooser.addOption("FRF", m_autoFRF);
+    chooser.addOption("FFF", m_autoFFF);
     chooser.addOption("FLF", m_autoFLF);
   }
 
