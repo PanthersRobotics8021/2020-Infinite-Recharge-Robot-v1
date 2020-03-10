@@ -97,7 +97,7 @@ public class InputWheelChangeColorBased extends CommandBase {
     
 
     //rotation reset
-    if (elapsedRotations == rotations) {
+    if (elapsedRotations >= rotations) {
       m_subsystem.rotations = 0;
       elapsedRotations = 0;
       initName = "None";

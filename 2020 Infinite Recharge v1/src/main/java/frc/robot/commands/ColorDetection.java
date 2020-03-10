@@ -84,7 +84,7 @@ public class ColorDetection extends CommandBase {
 
 
     //final command
-    m_subsystem.displayColor(confidence, setColor, colorName, matchResult);
+    m_subsystem.displayColor(confidence, setColor, matchResult);
 
   }
 

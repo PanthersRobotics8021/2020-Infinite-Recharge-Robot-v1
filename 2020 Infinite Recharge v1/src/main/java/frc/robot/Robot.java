@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -16,9 +18,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the TimedRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
@@ -31,20 +34,31 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private final Compressor m_compressor = new Compressor(Constants.PCM_ID);
   public static OI m_oi;
-  
+
+  UsbCamera backCam;
+  UsbCamera adjusterCam;
+
   /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     m_oi = new OI();
-    SmartDashboard.putData("Auto mode", chooser); 
+    SmartDashboard.putData("Auto mode", chooser);
     m_compressor.start();
-    CameraServer.getInstance().startAutomaticCapture();
+    backCam = CameraServer.getInstance().startAutomaticCapture(0);
+    backCam.setResolution(80, 60);
+    backCam.setFPS(15);
+    backCam.setPixelFormat(VideoMode.PixelFormat.kMJPEG);
+    adjusterCam = CameraServer.getInstance().startAutomaticCapture(1);
+    adjusterCam.setResolution(80, 60);
+    adjusterCam.setFPS(15);
+    adjusterCam.setPixelFormat(VideoMode.PixelFormat.kMJPEG);
     m_autoFRF = m_robotContainer.getAutoFRF();
     m_autoFFF = m_robotContainer.getAutoFFF();
     m_autoFLF = m_robotContainer.getAutoFLF();

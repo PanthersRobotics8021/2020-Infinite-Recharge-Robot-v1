@@ -22,8 +22,9 @@ public class DriveTrain extends SubsystemBase {
 
   }
 
-  private final TalonSRX motorLeft = new TalonSRX(Constants.MOTOR_LEFT_ID);
-  private final TalonSRX motorRight = new TalonSRX(Constants.MOTOR_RIGHT_ID);
+  private TalonSRX motorLeft = new TalonSRX(Constants.MOTOR_LEFT_ID);
+  private TalonSRX motorRight = new TalonSRX(Constants.MOTOR_RIGHT_ID);
+
 
   public void setLeftMotors(double speed) {
     motorLeft.set(ControlMode.PercentOutput, speed);

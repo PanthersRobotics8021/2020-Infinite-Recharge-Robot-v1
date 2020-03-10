@@ -88,10 +88,10 @@ public final class Constants {
 
     //drivetrain variables
     public static final double TURN_SPEED_FACTOR = .9;
-    public static final double TURN_THRESHOLD = .2;
+    public static final double TURN_THRESHOLD = .4;
     public static final double TURN_90_SPEED = .5;
     public static final double TURN_90_TIME = .5;
     public static final double AUTO_SPEED = .5;
-    public static final double AUTO_TIME = 5;
+    public static final double AUTO_TIME = .5;
     
 }

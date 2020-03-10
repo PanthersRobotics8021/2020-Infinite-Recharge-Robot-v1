@@ -21,7 +21,6 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorChange;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -52,8 +51,8 @@ public class RobotContainer {
   //drivetrain
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final GTADrive m_gtaDrive = new GTADrive(m_driveTrain);
-  private final InputDrive m_90Right = new InputDrive(m_driveTrain, Constants.TURN_90_SPEED, -Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
-  private final InputDrive m_90Left = new InputDrive(m_driveTrain, -Constants.TURN_90_SPEED, Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
+  private final InputDrive m_90Right = new InputDrive(m_driveTrain, -Constants.TURN_90_SPEED, Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
+  private final InputDrive m_90Left = new InputDrive(m_driveTrain, Constants.TURN_90_SPEED, -Constants.TURN_90_SPEED, Constants.TURN_90_TIME);
 
 
   //shooter
@@ -61,16 +60,14 @@ public class RobotContainer {
   private final ShooterControl m_shooterControl = new ShooterControl(m_shooter);
 
   //auto command
-  private final SequentialCommandGroup m_autoFRF = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, -Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputShoot(m_shooter, Constants.SHOOTER_SPEED))));
+  private final SequentialCommandGroup m_autoFRF = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, -Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputShoot(m_shooter, Constants.SHOOTER_SPEED))));
   private final SequentialCommandGroup m_autoFFF = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputShoot(m_shooter, Constants.SHOOTER_SPEED))));
-  private final SequentialCommandGroup m_autoFLF = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, -Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputShoot(m_shooter, Constants.SHOOTER_SPEED))));
+  private final SequentialCommandGroup m_autoFLF = new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, -Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputDrive(m_driveTrain, Constants.AUTO_SPEED, Constants.AUTO_SPEED, Constants.AUTO_TIME).andThen(new InputShoot(m_shooter, Constants.SHOOTER_SPEED))));
 
   //joystick oi
   Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
   POVButton hatRight = new POVButton(driverController, Constants.POV_E);
   POVButton hatLeft = new POVButton(driverController, Constants.POV_W);
-  Button trigger = new JoystickButton(driverController, Constants.TRIGGER);
-  Button sevenButton = new JoystickButton(driverController, Constants.PAD_A1);
 
   //controller oi
   XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER);
@@ -110,11 +107,6 @@ public class RobotContainer {
     //USE .withtimeout !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
     hatRight.whenPressed(m_90Right);
     hatLeft.whenPressed(m_90Left);
-
-    ///////////////////////
-    trigger.whenPressed(m_autoFRF);
-    sevenButton.whenPressed(m_autoFLF);
-
   }
 
   public SequentialCommandGroup getAutoFRF() {
